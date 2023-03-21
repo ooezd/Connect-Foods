@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: ad2777eb2f348e844a1d32503a13072a
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Nice Sugar
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: b0c9453b198fb5745af3c77baf3a918c, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,36 @@
+﻿{
+    "levels": [
+        {
+            "levelNumber": 1,
+            "totalMove": 15,
+            "row": 6,
+            "column": 6,
+            "targetObjectives": [
+                {
+                    "count": 20,
+                    "name": "apple"
+                },
+                {
+                    "count": 5,
+                    "name": "potato"
+                }
+            ]
+        },
+        {
+            "levelNumber": 2,
+            "totalMove": 15,
+            "row": 6,
+            "column": 6,
+            "targetObjectives": [
+                {
+                    "count": 20,
+                    "name": "apple"
+                },
+                {
+                    "count": 5,
+                    "name": "potato"
+                }
+            ]
+        }
+    ]
+}
