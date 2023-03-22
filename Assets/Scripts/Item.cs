@@ -7,10 +7,11 @@ using System;
 
 public class Item : MonoBehaviour
 {
+    [SerializeField] Transform brokenTiles;
     [SerializeField] SpriteRenderer itemSpriteRenderer;
     [SerializeField] SpriteRenderer tileSpriteRenderer;
 
-    [HideInInspector] public ItemType _itemType;
+    [HideInInspector] public ItemType itemType;
     [HideInInspector] public Vector2 coordinate;
 
     ItemAnimations _itemAnimations;
@@ -20,22 +21,27 @@ public class Item : MonoBehaviour
         TryGetComponent(out _itemAnimations);
     }
     public void Init(ItemType itemType, Vector2 coordinate)
-    {
-        _itemType = itemType;
+    {   
+        this.itemType = itemType;
         this.coordinate = coordinate;
-        itemSpriteRenderer.sprite = SpriteContainer.Instance.GetItemSprite(_itemType);
+        itemSpriteRenderer.sprite = SpriteContainer.Instance.GetItemSprite(this.itemType);
     }
     public void OnSelected()
     {
-        tileSpriteRenderer.color = Color.red;
+        _itemAnimations.PlaySelectedAnimation();
     }
     public void OnDeselected()
     {
-        tileSpriteRenderer.color = Color.white;
+        _itemAnimations.PlayDeselectedAnimation();
     }
-    public void OnExplode(Action onComplete, int index)
+    public void OnExplode(Action<Item> onComplete, int index)
     {
-        _itemAnimations?.PlayExplodeAnimation(onComplete, index);
+        Action onAnimationComplete = () => { onComplete(this); };
+        _itemAnimations?.PlayExplodeAnimation(onAnimationComplete, index);
+        if(_itemAnimations == null)
+        {
+            onComplete(this);
+        }
     }
 }
 public enum ItemType

@@ -45,9 +45,9 @@ TagManager:
   - name: Tiles
     uniqueID: 532070567
     locked: 0
-  - name: Items
-    uniqueID: 153378765
-    locked: 0
   - name: BrokenTiles
     uniqueID: 3649237029
+    locked: 0
+  - name: Items
+    uniqueID: 153378765
     locked: 0

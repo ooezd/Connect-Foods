@@ -38,7 +38,7 @@ public class LevelsPopupController : MonoBehaviour
     }
     void OnLevelRowClick(LevelModel levelModel)
     {
-        //keep levelModel after scene change
+        SessionManager.Instance.SetCurrentLevel(levelModel);
         _viewManager.LoadScene(1);
     }
     public void OnCloseButtonClick()

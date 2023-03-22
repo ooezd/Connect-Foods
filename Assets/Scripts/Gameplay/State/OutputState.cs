@@ -33,10 +33,12 @@ public class OutputState : BaseState
         var connectionCount = connection.Count;
         if (connectionCount >= 3)
         {
+            _gameManager.ItemsDestroyed(connection[0].itemType, connectionCount);
             for (int i = 0; i < connectionCount; i++)
             {
                 connection[i].OnExplode(OnConnectionAnimationsComplete,i);
             }
+            _gameManager.MoveCount--;
         }
         else
         {
@@ -48,8 +50,14 @@ public class OutputState : BaseState
         }
     }
 
-    void OnConnectionAnimationsComplete()
+    private void OnItemsDestroyed(ItemType itemType, int count)
     {
+        throw new System.NotImplementedException();
+    }
+
+    void OnConnectionAnimationsComplete(Item item)
+    {
+        _gameManager.ItemDestroyed(item);
         if (isSwitching)
         {
             return;

@@ -7,28 +7,32 @@
             "column": 6,
             "targetObjectives": [
                 {
-                    "count": 20,
-                    "name": "apple"
+                    "count": 15,
+                    "name": "Pumpkin"
                 },
                 {
-                    "count": 5,
-                    "name": "potato"
+                    "count": 15,
+                    "name": "Banana"
                 }
             ]
         },
         {
             "levelNumber": 2,
-            "totalMove": 15,
-            "row": 6,
-            "column": 6,
+            "totalMove": 12,
+            "row": 7,
+            "column": 7,
             "targetObjectives": [
                 {
                     "count": 20,
-                    "name": "apple"
+                    "name": "Apple"
+                },
+                {
+                    "count": 15,
+                    "name": "Blueberry"
                 },
                 {
                     "count": 5,
-                    "name": "potato"
+                    "name": "DragonFruit"
                 }
             ]
         }
