@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +11,10 @@ public class ProgressionManager
 
     private int lastPassedLevel = -1;
     private BestScores bestScores;
+    public bool showLevelsPopup;
+    public bool isHighScore;
+    public int lastScore;
+    public int lastLevelNumber;
     
     private static ProgressionManager _instance;
     public static ProgressionManager Instance
@@ -64,13 +69,15 @@ public class ProgressionManager
         {
             bestScores.bestScoresList.Add(levelNumber, score);
         }
+        isHighScore = true;
 
-        var bestScoreJson = JsonUtility.ToJson(bestScores);
+        var bestScoreJson = JsonConvert.SerializeObject(bestScores, Formatting.Indented);
         PlayerPrefs.SetString(BEST_SCORES_KEY, bestScoreJson);
         PlayerPrefs.Save();
     }
-    public void SaveLastPassedLevel(int levelNumber)
+    public void SavePassedLevel(int levelNumber)
     {
+        showLevelsPopup = true;
         if(lastPassedLevel > levelNumber)
         {
             return;
@@ -90,8 +97,8 @@ public class ProgressionManager
     }
     BestScores LoadBestScores()
     {
-        string bestScoreJson = PlayerPrefs.GetString(BEST_SCORES_KEY, JsonUtility.ToJson(new BestScores()));
-        var bestScores = JsonUtility.FromJson<BestScores>(bestScoreJson);
+        string bestScoreJson = PlayerPrefs.GetString(BEST_SCORES_KEY, JsonConvert.SerializeObject(new BestScores()));
+        var bestScores = JsonConvert.DeserializeObject<BestScores>(bestScoreJson);
         return bestScores;
     }
     [Serializable]

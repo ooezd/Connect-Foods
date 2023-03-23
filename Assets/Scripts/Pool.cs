@@ -53,7 +53,7 @@ public class Pool
         pooledList.Remove(go);
         busyList.Add(go);
 
-        return SpawnNewObject();
+        return go;
     }
     public void ReturnToPool(GameObject go)
     {

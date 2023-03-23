@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class ViewManager : MonoBehaviour
 {
-    [SerializeField] List<GameObject> popups;
+    [SerializeField] List<GameObject> views;
 
     public static ViewManager Instance;
     void Awake()
@@ -17,13 +17,9 @@ public class ViewManager : MonoBehaviour
         }
         Instance = this;
     }
-    void Start()
-    {
-        LoadPopup("MainMenuView");
-    }
     public void LoadPopup(string popupName)
     {
-        var view = popups.First(v => v.name.Equals(popupName));
+        var view = views.First(v => v.name.Equals(popupName));
         if (view == null)
         {
             Debug.LogError($"Popup name {popupName} couldn't be found.");
@@ -31,7 +27,6 @@ public class ViewManager : MonoBehaviour
 
         Instantiate(view);
     }
-
     public void LoadScene(int index)
     {
         SceneManager.LoadScene(index);

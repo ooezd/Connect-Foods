@@ -75,8 +75,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282056959
-  m_fontColor: {r: 1, g: 0, b: 0.23137255, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 64
-  m_fontSizeBase: 64
+  m_fontSize: 84
+  m_fontSizeBase: 84
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 0
@@ -172,8 +172,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -150}
-  m_SizeDelta: {x: 662.6814, y: 165.67038}
+  m_AnchoredPosition: {x: 0, y: -428.229}
+  m_SizeDelta: {x: 489.5172, y: 205.5972}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2715312427616012860
 CanvasRenderer:
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7034d4921461131448e1babc4c1e55f8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 871a5444f171c1e4fb6236033ca46538, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -320,9 +320,9 @@ Canvas:
   m_GameObject: {fileID: 2715312428054326042}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 5
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -330,7 +330,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!114 &2715312428054326040
 MonoBehaviour:
@@ -384,8 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e3065f5bf3f0a4ca9b1064d92c5d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playButton: {fileID: 2715312427616012862}
-  levelsPopup: {fileID: 1954698169968086535, guid: 0ffabe7f54f9efd4f81e47d306667c7f, type: 3}
+  bestScorePopup: {fileID: 0}
 --- !u!1 &2715312428511376734
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,7 +444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5554389, g: 0.15566039, b: 1, a: 1}
+  m_Color: {r: 0.51149106, g: 0.15686274, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

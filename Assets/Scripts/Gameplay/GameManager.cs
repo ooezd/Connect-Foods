@@ -8,11 +8,13 @@ public class GameManager : MonoBehaviour
     BaseState currentState;
     public IntroState introState = new();
     public PlayableState playableState = new();
+    public ShuffleState shuffleState = new();
     public OutputState outputState = new();
     public EndState endState = new();
 
     [SerializeField] public GameUIController gameUIController;
     [SerializeField] private GameObject gridManagerPrefab;
+    [SerializeField] private Camera uiCamera;
 
     [HideInInspector] public List<Item> selectedItems = new();
     [HideInInspector] public Item lastSelectedItem;
@@ -20,13 +22,15 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public GridManager gridManager;
     [HideInInspector] public SessionManager sessionManager;
     [HideInInspector] public LevelModel levelModel;
+    [HideInInspector] public GameResult gameResult;
     
     public List<TargetObjective> TargetObjectives {
         get { return _targetObjectives; }
         set 
         { 
             _targetObjectives = value;
-            onTargetObjectivesChanged?.Invoke(_targetObjectives);
+            gameUIController.SetTargetObjectives(_targetObjectives);
+            CreateDestroyedObjectsDict(_targetObjectives);
         }
     }
     private List<TargetObjective> _targetObjectives;
@@ -41,10 +45,21 @@ public class GameManager : MonoBehaviour
         }
     }
     private int _moveCount;
+    public int Point
+    {
+        get { return _point; }
+        set
+        {
+            _point = value;
+            onPointChanged?.Invoke(_point);
+        }
+    }
+    private int _point=0;
+    public Dictionary<ItemType, int> _destroyedTargetObjectives = new();
 
     public event Action<int> onMoveCountChanged;
-    public event Action<List<TargetObjective>> onTargetObjectivesChanged;
     public event Action<ItemType, int> onItemsDestroyed;
+    public event Action<int> onPointChanged;
 
     public static GameManager Instance;
     void Awake()
@@ -57,9 +72,9 @@ public class GameManager : MonoBehaviour
 
         var gridManagerObject = Instantiate(gridManagerPrefab);
         gridManager = gridManagerObject.GetComponent<GridManager>();
+        gridManager.uiCamera = uiCamera;
         sessionManager = SessionManager.Instance;
     }
-
     void Start()
     {
         currentState = introState;
@@ -67,7 +82,7 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        currentState.UpdateState();
+        currentState?.UpdateState();
     }
     public void SwitchState(BaseState state)
     {
@@ -75,8 +90,7 @@ public class GameManager : MonoBehaviour
         currentState = state;
         state.EnterState(this);
     }
-    
-    public bool IsValid(Item item)
+    public bool IsValidType(Item item)
     {
         if(lastSelectedItem == null)
         {
@@ -101,13 +115,31 @@ public class GameManager : MonoBehaviour
         }
         return false;
     }
-
     public void ItemsDestroyed(ItemType itemType, int count)
     {
+        Point += count;
+        if (_destroyedTargetObjectives.ContainsKey(itemType))
+        {
+            _destroyedTargetObjectives[itemType] += count;
+        }
         onItemsDestroyed?.Invoke(itemType, count);
     }
     public void ItemDestroyed(Item item)
     {
         gridManager.ItemDestroyed(item);
+    }
+    public void ClearConnection()
+    {
+        selectedItems.Clear();
+        lastSelectedItem = null;
+    }
+    void CreateDestroyedObjectsDict(List<TargetObjective> targetObjectives)
+    {
+        _destroyedTargetObjectives = new();
+        foreach(var targetObjective in targetObjectives)
+        {
+            var itemType = Item.GetItemTypeFromName(targetObjective.name);
+            _destroyedTargetObjectives.Add(itemType, 0);
+        }
     }
 }

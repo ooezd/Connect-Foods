@@ -16,7 +16,7 @@ public class PoolManager : MonoBehaviour
             Destroy(gameObject);
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this.gameObject);
     }
     public Pool GetPool<TPool>(GameObject prefab, int initialAmount)
     {
@@ -30,7 +30,7 @@ public class PoolManager : MonoBehaviour
     {
         var containerObject = Instantiate(containerPrefab);
         containerObject.name = typeof(TPool) + "Pool";
-        containerObject.transform.SetParent(transform);
+        containerObject.transform.SetParent(this.transform);
         Pool pool = new Pool(prefab, initialAmount, containerObject.transform);
         pools.Add(typeof(TPool), pool);
         containers.Add(typeof(TPool), containerObject.transform);

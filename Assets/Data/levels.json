@@ -2,37 +2,153 @@
     "levels": [
         {
             "levelNumber": 1,
-            "totalMove": 15,
-            "row": 6,
-            "column": 6,
+            "totalMove": 10,
+            "row": 4,
+            "column": 4,
             "targetObjectives": [
                 {
-                    "count": 15,
+                    "count": 5,
                     "name": "Pumpkin"
                 },
                 {
-                    "count": 15,
-                    "name": "Banana"
+                    "count": 5,
+                    "name": "Apple"
                 }
             ]
         },
         {
             "levelNumber": 2,
             "totalMove": 12,
+            "row": 4,
+            "column": 5,
+            "targetObjectives": [
+                {
+                    "count": 8,
+                    "name": "Apple"
+                },
+                {
+                    "count": 5,
+                    "name": "Blueberry"
+                }
+            ]
+        },
+        {
+            "levelNumber": 3,
+            "totalMove": 15,
+            "row": 5,
+            "column": 5,
+            "targetObjectives": [
+                {
+                    "count": 10,
+                    "name": "DragonFruit"
+                },
+                {
+                    "count": 7,
+                    "name": "Blueberry"
+                },
+                {
+                    "count": 4,
+                    "name": "Banana"
+                }
+            ]
+        },
+        {
+            "levelNumber": 4,
+            "totalMove": 15,
+            "row": 5,
+            "column": 6,
+            "targetObjectives": [
+                {
+                    "count": 10,
+                    "name": "Blueberry"
+                },
+                {
+                    "count": 7,
+                    "name": "DragonFruit"
+                },
+                {
+                    "count": 4,
+                    "name": "Pumpkin"
+                }
+            ]
+        },
+        {
+            "levelNumber": 5,
+            "totalMove": 16,
             "row": 7,
-            "column": 7,
+            "column": 6,
             "targetObjectives": [
                 {
                     "count": 20,
                     "name": "Apple"
                 },
                 {
+                    "count": 12,
+                    "name": "Banana"
+                }
+            ]
+        },
+        {
+            "levelNumber": 6,
+            "totalMove": 20,
+            "row": 6,
+            "column": 7,
+            "targetObjectives": [
+                {
+                    "count": 25,
+                    "name": "DragonFruit"
+                },
+                {
+                    "count": 15,
+                    "name": "Banana"
+                },
+                {
+                    "count": 5,
+                    "name": "Blueberry"
+                }
+            ]
+        },
+        {
+            "levelNumber": 7,
+            "totalMove": 18,
+            "row": 7,
+            "column": 7,
+            "targetObjectives": [
+                {
+                    "count": 25,
+                    "name": "Blueberry"
+                },
+                {
+                    "count": 20,
+                    "name": "Apple"
+                }
+            ]
+        },
+        {
+            "levelNumber": 8,
+            "totalMove": 35,
+            "row": 9,
+            "column": 7,
+            "targetObjectives": [
+                {
+                    "count": 15,
+                    "name": "DragonFruit"
+                },
+                {
+                    "count": 15,
+                    "name": "Banana"
+                },
+                {
                     "count": 15,
                     "name": "Blueberry"
                 },
                 {
-                    "count": 5,
-                    "name": "DragonFruit"
+                    "count": 15,
+                    "name": "Apple"
+                },
+                {
+                    "count": 15,
+                    "name": "Pumpkin"
                 }
             ]
         }

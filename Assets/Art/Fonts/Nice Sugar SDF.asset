@@ -11,7 +11,6 @@ Material:
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
   m_ValidKeywords:
   - BEVEL_ON
-  - GLOW_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -44,7 +43,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Ambient: 0.673
+    - _Ambient: 0.521
     - _Bevel: 0.706
     - _BevelClamp: 0
     - _BevelOffset: -0.101
@@ -54,7 +53,7 @@ Material:
     - _BumpOutline: 0
     - _ColorMask: 15
     - _CullMode: 0
-    - _Diffuse: 0.45
+    - _Diffuse: 0.278
     - _FaceDilate: 0.4
     - _FaceUVSpeedX: 0
     - _FaceUVSpeedY: 0
@@ -69,10 +68,10 @@ Material:
     - _OutlineSoftness: 0.1
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
-    - _OutlineWidth: 0.369
+    - _OutlineWidth: 0.336
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 5
-    - _ScaleRatioA: 0.788768
+    - _ScaleRatioA: 0.8141997
     - _ScaleRatioB: 0.34375
     - _ScaleRatioC: 0.34375
     - _ScaleX: 1

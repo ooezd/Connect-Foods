@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Newtonsoft.Json;
+
 public class LevelReader : MonoBehaviour
 {
     [SerializeField] TextAsset levelsJSON;
@@ -21,7 +23,7 @@ public class LevelReader : MonoBehaviour
 
     void LoadLevels()
     {
-        levels = JsonUtility.FromJson<LevelsList>(levelsJSON.text);
+        levels = JsonConvert.DeserializeObject<LevelsList>(levelsJSON.text);
     }
 
     public LevelData GetLevelData(int levelNumber)
@@ -39,7 +41,7 @@ public class LevelReader : MonoBehaviour
     {
         return levels.levels;
     }
-    public List<LevelModel> GetLevelsModel()
+    public List<LevelModel> GetLevelModels()
     {
         var modelsList = new List<LevelModel>();
         foreach(var levelData in levels.levels)

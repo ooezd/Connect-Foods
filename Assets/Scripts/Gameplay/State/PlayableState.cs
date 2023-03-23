@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,15 @@ public class PlayableState : BaseState
         _inputProvider.selectionContinue += ContinueSelection;
         _inputProvider.releaseSelection += ReleaseSelection;
         _inputProvider.SetActive(true);
+
+        var seq = DOTween.Sequence();
+        seq.AppendInterval(.1f).onComplete += () =>
+        {
+            if (!_gameManager.gridManager.HasPotentialMatch())
+            {
+                _gameManager.SwitchState(_gameManager.shuffleState);
+            }
+        };
     }
 
     public override void UpdateState()
@@ -34,7 +44,7 @@ public class PlayableState : BaseState
         if (_gameManager.lastSelectedItem == null)
             return;
 
-        if (_gameManager.IsValid(item))
+        if (_gameManager.IsValidType(item))
         {
             item.OnSelected();
             _gameManager.selectedItems.Add(item);
@@ -50,6 +60,23 @@ public class PlayableState : BaseState
     }
     private void ReleaseSelection()
     {
-        _gameManager.SwitchState(_gameManager.outputState);
+        var selectedItems = _gameManager.selectedItems;
+        var connectionCount = selectedItems.Count;
+        if (HasEnoughConnections(connectionCount))
+        {
+            _gameManager.SwitchState(_gameManager.outputState);
+        }
+        else
+        {
+            for (int i = 0; i < connectionCount; i++)
+            {
+                selectedItems[i].OnDeselected();
+            }
+            _gameManager.ClearConnection();
+        }
+    }
+    bool HasEnoughConnections(int connectionCount)
+    {
+        return connectionCount >= 3;
     }
 }

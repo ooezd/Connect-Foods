@@ -188,11 +188,11 @@ MonoBehaviour:
   - {fileID: 2098051589149279155}
   - {fileID: 8115914463391161269}
   - {fileID: 2534406253471417497}
-  tileSpriteRenderer: {fileID: 1227010808359983283}
+  tileRenderer: {fileID: 1227010808359983283}
   itemRenderer: {fileID: 8895159043079901553}
-  speed: 4
+  speed: 8
   randomize: 0
-  duration: 0.4
+  duration: 0.8
   delayPerItemIndex: 0.05
 --- !u!1 &1921797528463476983
 GameObject:

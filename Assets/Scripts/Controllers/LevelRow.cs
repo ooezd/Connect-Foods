@@ -12,9 +12,13 @@ public class LevelRow : MonoBehaviour
     [SerializeField] Button playButton;
     [SerializeField] TextMeshProUGUI playButtonText;
     [SerializeField] Image playButtonLockImage;
+    [SerializeField] Color unlockedRowColor;
+    [SerializeField] Color lockedRowColor;
+    [SerializeField] Image rowImage;
 
     private const string BEST_SCORE_PREFIX = "Best score: ";
-    private const string LEVEL_PREFIX = "Level ";
+    private const string LEVEL_PREFIX = "Level <size=40>";
+    private const string LEVEL_SUFFIX = "</size>";
     private LevelModel _model;
     private Action<LevelModel> _onClicked;
 
@@ -28,25 +32,24 @@ public class LevelRow : MonoBehaviour
     {
         var levelData = _model.levelData;
         var bestScore = _model.bestScore;
-        levelLabel.text = LEVEL_PREFIX + levelData.levelNumber.ToString();
-        if(bestScore<= 0)
-        {
-            bestScoreText.enabled = false;
-        }
+        levelLabel.text = LEVEL_PREFIX + levelData.levelNumber.ToString() + LEVEL_SUFFIX;
+        bestScoreText.gameObject.SetActive(bestScore > 0);
         bestScoreText.text = BEST_SCORE_PREFIX + _model.bestScore;
+
         PreparePlayButton(_model.isUnlocked);
     }
     void PreparePlayButton(bool isUnlocked)
     {
-        playButton.interactable = _model.isUnlocked;
-        playButton.image.color = isUnlocked ? Color.green : Color.grey;
-
+        playButton.image.enabled = isUnlocked;
         playButtonLockImage.enabled = !isUnlocked;
+        playButton.interactable = isUnlocked;
         playButtonText.enabled = isUnlocked;
+        rowImage.color = isUnlocked ? unlockedRowColor : lockedRowColor;
     }
 
     public void OnPlayButtonClick()
     {
+        AudioManager.Instance.PlayFx(FXClip.ButtonClick);
         if (!_model.isUnlocked)
         {
             return;

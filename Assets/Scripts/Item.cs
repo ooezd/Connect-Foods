@@ -15,8 +15,7 @@ public class Item : MonoBehaviour
     [HideInInspector] public Vector2 coordinate;
 
     ItemAnimations _itemAnimations;
-
-    void Start()
+    void Awake()
     {
         TryGetComponent(out _itemAnimations);
     }
@@ -25,6 +24,7 @@ public class Item : MonoBehaviour
         this.itemType = itemType;
         this.coordinate = coordinate;
         itemSpriteRenderer.sprite = SpriteContainer.Instance.GetItemSprite(this.itemType);
+        _itemAnimations?.PlayAppearAnimation();
     }
     public void OnSelected()
     {
@@ -43,6 +43,26 @@ public class Item : MonoBehaviour
             onComplete(this);
         }
     }
+
+    public static ItemType GetItemTypeFromName(string itemName)
+    {
+        switch (itemName)
+        {
+            case "Pumpkin":
+                return ItemType.Pumpkin;
+            case "Banana":
+                return ItemType.Banana;
+            case "Apple":
+                return ItemType.Apple;
+            case "Blueberry":
+                return ItemType.Blueberry;
+            case "DragonFruit":
+                return ItemType.DragonFruit;
+            default:
+                Debug.LogError($"Item name mismatch: {itemName} couldn't be found.");
+                return ItemType.None;
+        }
+    }
 }
 public enum ItemType
 {
@@ -50,5 +70,6 @@ public enum ItemType
     Banana,
     Apple,
     Blueberry,
-    DragonFruit
+    DragonFruit,
+    None
 }
