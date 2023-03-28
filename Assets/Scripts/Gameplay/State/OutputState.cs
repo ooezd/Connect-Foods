@@ -5,15 +5,14 @@ using UnityEngine;
 
 public class OutputState : BaseState
 {
-    Sequence scoreSequence;
-    Sequence failSequence;
-
-    bool isSwitching;
+    int connectionCount;
+    int destroyedItemCount;
     public override void EnterState(GameManager gameManager)
     {
         Debug.Log($"New state: {nameof(OutputState)}");
         base.EnterState(gameManager);
-        isSwitching = false;
+        destroyedItemCount = 0;
+        connectionCount = 0;
 
         HandleConnection();
     }
@@ -30,35 +29,35 @@ public class OutputState : BaseState
     void HandleConnection()
     {
         var selectedItems = _gameManager.selectedItems;
-        var connectionCount = selectedItems.Count;
+        connectionCount = selectedItems.Count;
         _gameManager.ItemsDestroyed(selectedItems[0].itemType, connectionCount);
         _gameManager.MoveCount--;
         for (int i = 0; i < connectionCount; i++)
         {
-            selectedItems[i].OnExplode(OnConnectionAnimationsComplete, i);
+            selectedItems[i].OnExplode(OnConnectionAnimationComplete, i);
         }
     }
 
-    void OnConnectionAnimationsComplete(Item item)
+    void OnConnectionAnimationComplete(Item item)
     {
-        var gameResult = CheckGameCompleted();
+        destroyedItemCount++;
+        var gameResult = GetGameResult();
         _gameManager.gameResult = gameResult;
         _gameManager.ItemDestroyed(item);
-        if (isSwitching)
+
+        if (destroyedItemCount.Equals(connectionCount))
         {
-            return;
-        }
-        isSwitching = true;
-        if (gameResult.isCompleted)
-        {
-            _gameManager.SwitchState(_gameManager.endState);
-        }
-        else
-        {
-            _gameManager.SwitchState(_gameManager.playableState);
+            if (gameResult.isCompleted)
+            {
+                _gameManager.SwitchState(_gameManager.endState);
+            }
+            else
+            {
+                _gameManager.SwitchState(_gameManager.playableState);
+            }
         }
     }
-    public GameResult CheckGameCompleted()
+    public GameResult GetGameResult()
     {
         GameResult gameResult;
         foreach(var targetObjective in _gameManager.TargetObjectives)

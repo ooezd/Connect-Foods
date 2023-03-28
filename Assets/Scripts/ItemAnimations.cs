@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System;
-
 public class ItemAnimations : MonoBehaviour
 {
     [SerializeField] Sprite[] tileSprites;
@@ -18,16 +17,16 @@ public class ItemAnimations : MonoBehaviour
     [SerializeField] private float randomize;
     [SerializeField] private float duration;
     [SerializeField] private float delayPerItemIndex;
-    Vector3[] brokenTileInitialPositions;
+    Vector3[] brokenTileInitialOffsets;
 
     void Awake()
     {
-        brokenTileInitialPositions = new Vector3[brokenTiles.Length];
+        brokenTileInitialOffsets = new Vector3[brokenTiles.Length];
         var brokenTileCount = brokenTiles.Length;
         
         for(int i =0; i < brokenTileCount; i++)
         {
-            brokenTileInitialPositions[i] = brokenTiles[i].transform.position;
+            brokenTileInitialOffsets[i] = brokenTiles[i].transform.position - transform.position;
         }
     }
     public void PlayAppearAnimation()
@@ -37,25 +36,27 @@ public class ItemAnimations : MonoBehaviour
         tileRenderer.DOColor(Color.white, duration * .35f);
         tileRenderer.transform.DOScale(1, duration * .35f).SetEase(Ease.OutBack);
         transform.DOScale(1f, duration * .35f).SetEase(Ease.OutBack);
-        itemRenderer.transform.DOScale(1f, duration * .35f).SetEase(Ease.OutBack).SetDelay(duration*.1f);
+        itemRenderer.transform.DOScale(1f, duration * .35f).SetEase(Ease.OutBack).SetDelay(duration*.06f);
     }
     public void PlayExplodeAnimation(Action onComplete, int index)
     {
-        tileRenderer.enabled = false;
         var seq = DOTween.Sequence();
-        seq.AppendInterval(index * .075f).onComplete += ()=>
+        seq.AppendInterval(index * .06f).onComplete += ()=>
         {
+            tileRenderer.enabled = false;
             AudioManager.Instance.PlayFx(FXClip.TileRemove,.6f);
             foreach (SpriteRenderer brokenTile in brokenTiles)
             {
                 var brokenTileTransform = brokenTile.transform;
                 brokenTile.gameObject.SetActive(true);
                 var directionFromCenter = brokenTileTransform.position - transform.position;
-                directionFromCenter *= speed;
+                
+                var brokenTileSpeed = directionFromCenter.normalized * speed;
 
+                var randomVector = new Vector3(UnityEngine.Random.Range(-randomize, randomize), UnityEngine.Random.Range(-randomize, randomize));
                 brokenTile.DOFade(0, duration * .5f).SetDelay(.5f);
-                brokenTileTransform.DOMove(transform.localPosition + directionFromCenter, duration)
-                    .SetEase(Ease.OutCirc);
+                brokenTileTransform.DOMove(transform.localPosition + brokenTileSpeed + randomVector, duration)
+                    .SetEase(Ease.InOutSine);
             }
             itemRenderer.transform.DOScale(1.3f, duration * .4f)
                 .SetEase(Ease.InOutBack);
@@ -94,7 +95,7 @@ public class ItemAnimations : MonoBehaviour
     {
         for (int i = 0; i < brokenTiles.Length; i++)
         {
-            brokenTiles[i].transform.position = brokenTileInitialPositions[i];
+            brokenTiles[i].transform.position = transform.position + brokenTileInitialOffsets[i];
             brokenTiles[i].color = Color.white;
             brokenTiles[i].gameObject.SetActive(false);
         }

@@ -17,14 +17,11 @@ public class PlayableState : BaseState
         _inputProvider.releaseSelection += ReleaseSelection;
         _inputProvider.SetActive(true);
 
-        var seq = DOTween.Sequence();
-        seq.AppendInterval(.1f).onComplete += () =>
+
+        if (!_gameManager.gridManager.HasPotentialMatch())
         {
-            if (!_gameManager.gridManager.HasPotentialMatch())
-            {
-                _gameManager.SwitchState(_gameManager.shuffleState);
-            }
-        };
+            _gameManager.SwitchState(_gameManager.shuffleState);
+        }
     }
 
     public override void UpdateState()

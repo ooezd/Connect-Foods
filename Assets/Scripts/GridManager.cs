@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using DG.Tweening;
 
 public class GridManager : MonoBehaviour
 {
@@ -62,7 +63,6 @@ public class GridManager : MonoBehaviour
         _camera.orthographicSize = screenSize;
         uiCamera.orthographicSize = screenSize;
         background.transform.localScale = (screenSize/referenceSize) * backgroundPreferredSize * Vector3.one;
-
     }
     void CreateGrid()
     {
@@ -106,29 +106,29 @@ public class GridManager : MonoBehaviour
         items[xCoordinate, yCoordinate] = item;
         itemTypes[xCoordinate, yCoordinate] = itemType;
     }
-    public void ItemDestroyed(Item item)
+    public void RecycleItem(Item item)
     {
-        Debug.Log("GridManager ItemDestroyed");
+        Debug.Log($"GridManager ItemDestroyed: {item.coordinate}");
         _itemPool.ReturnToPool(item.gameObject);
         CreateNewItem((int)item.coordinate.x, (int)item.coordinate.y);
     }
     public void Shuffle(Action onComplete)
     {
-        Debug.Log("SHUFFLE");
-
-        for (int i = 0; i < _xDim; i++)
+        var seq = DOTween.Sequence();
+        seq.AppendInterval(2).onComplete += () =>
         {
-            for (int j = 0; j < _yDim; j++)
-            {
-                ItemDestroyed(items[i, j]);
-            }
-        }
+            Debug.Log("SHUFFLE");
 
-        onComplete.Invoke();
-    }
-    public Vector2 GetCenterPos()
-    {
-        return _centerPos;
+            for (int i = 0; i < _xDim; i++)
+            {
+                for (int j = 0; j < _yDim; j++)
+                {
+                    RecycleItem(items[i, j]);
+                }
+            }
+
+            onComplete.Invoke();
+        };
     }
 
     #region DFS
@@ -155,16 +155,16 @@ public class GridManager : MonoBehaviour
     }
     public bool IsValidConnection(int xPos, int yPos, int connectionCount)
     {
+        if (connectionCount >= 3)
+        {
+            return true;
+        }
         if (visitedMatrix[xPos, yPos])
         {
             return false;
         }
         visitedMatrix[xPos, yPos] = true;
 
-        if (connectionCount >= 3)
-        {
-            return true;
-        }
         if (xPos < 0 || yPos < 0 || xPos >= itemTypes.GetLength(0) || yPos >= itemTypes.GetLength(1))
         {
             return false;
@@ -186,10 +186,7 @@ public class GridManager : MonoBehaviour
                         {
                             continue;
                         }
-                        //if(IsValidConnection(x,y, ++connectionCount))
-                        //{
-                        //    return true;
-                        //}
+
                         connectionCount += 1;
                         if(connectionCount >= 3)
                         {

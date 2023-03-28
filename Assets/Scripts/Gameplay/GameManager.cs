@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
     }
     public void ItemDestroyed(Item item)
     {
-        gridManager.ItemDestroyed(item);
+        gridManager.RecycleItem(item);
     }
     public void ClearConnection()
     {
